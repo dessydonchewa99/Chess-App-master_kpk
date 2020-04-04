@@ -3,26 +3,11 @@
 #include"IBoard.h"
 
 
-
-
-
-//************************************
-// Method:    Bishop
-// FullName:  Bishop::Bishop
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
-Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
-{
+Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures) {
 
 	this->setName("Bishop");
-	// row col
-		// 1,1
-		// down 1, right 1
+
+	// down 1, right 1
 	this->rules.push_back(new Position(1, 1));
 	// down 1, left 1
 	this->rules.push_back(new Position(1, -1));
@@ -33,56 +18,39 @@ Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFig
 	this->rules.push_back(new Position(-1, -1));
 }
 
-//************************************
-// Method:    getPossibleMoves
-// FullName:  Bishop::getPossibleMoves
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void Bishop::getPossibleMoves(DynamicArray<Move*>* result)
-{
+void Bishop::getPossibleMoves(DynamicArray<Move*>* result) {
 	bool flag = true;
-	int row, col, tempRow, tempCol, colorCorrection;
+	int row, column, tempRow, tempColumn, colorCorrection;
 	colorCorrection = 1;
 	Color curentColor;
 	row = position->getRow();
-	col = position->getCol();
-	curentColor = board->getFigure(row, col)->getColor();
-	if (curentColor == BLACK)
-	{
+	column = position->getCol();
+	currentColor = board->getFigure(row, col)->getColor();
+	if (currentColor == BLACK) {
 		colorCorrection = -1;
 	}
 
-	for (int i = 0; i < GlobalVaribles::SIZE ; i++)
-	{
+	for (int i = 0; i < GlobalVaribles::SIZE ; i++) {
 
-		if (!board->isEmpty(row, col))
-		{
-			for (unsigned int p = 0; p < rules.get_size(); p++)
-			{
+		if (!board->isEmpty(row, column)) {
+			for (unsigned int p = 0; p < rules.get_size(); p++) {
 				flag = true;
 				int add = 1;
-				while (flag)
-				{
+				while (flag) {
 					tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
-					tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
+					tempColumn = column + add * (rules.get_ElementAtIndex(p)->getCol());
 
-					if (position->areValid(tempRow, tempCol))
-					{
+					if (position->areValid(tempRow, tempColumn)) {
 
-						if (board->isEmpty(tempRow, tempCol))
-						{
+						if (board->isEmpty(tempRow, tempCol)) {
 							// if board is empty and attacking move is false
-							result->push_back(new Move(row, col, tempRow, tempCol));
+							result->push_back(new Move(row, column, tempRow, tempColumn));
 						}
 						// if there is enemy figure and attacking move is true
 
-						else if (board->getFigure(tempRow, tempCol)->getColor() != curentColor)
-						{
+						else if (board->getFigure(tempRow, tempColumn)->getColor() != currentColor) {
 							// if there is figure of somekind the rook could not jump over it 
-							result->push_back(new Move(row, col, tempRow, tempCol, true));
+							result->push_back(new Move(row, col, tempRow, tempColumn, true));
 							flag = false;
 						}
 						else {
@@ -94,11 +62,8 @@ void Bishop::getPossibleMoves(DynamicArray<Move*>* result)
 					}
 					++add;
 				}
-				// close foreach rules here
 			}
 		}
-		// close foreach rule
-
 
 	}
 }
