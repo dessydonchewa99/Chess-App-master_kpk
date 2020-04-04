@@ -1,6 +1,8 @@
 #pragma once
 
 template<typename T>
+CONST int DEFAULT_SIZE = 0;
+CONST int DEFAULT_CAPACITY = 20;
 class DynamicArray {
 private:
 	T * arr;
@@ -12,7 +14,6 @@ private:
 	// FullName:  DynamicArray<T>::resize
 	// Access:    private 
 	// Returns:   void
-	// Qualifier:
 	//************************************
 	void resize() {
 		capacity *= 2;
@@ -24,42 +25,39 @@ private:
 		arr = temp;
 	}
 
-	void copy(const DynamicArray<T>& other) {
-		size = other.size;
-		capacity = other.capacity;
+	void copy(const DynamicArray<T>& otherArr) {
+		size = otherArr.size;
+		capacity = otherArr.capacity;
 		arr = new T[capacity];
 		for (unsigned i = 0; i < size; i++) {
-			arr[i] = other.arr[i];
+			arr[i] = otherArr.arr[i];
 		}
 	}
 public:
 	DynamicArray() {
-		size = 0;
-		capacity = 20;
+		size = DEFAULT_SIZE;
+		capacity = DEFAULT_CAPACITY;
 		arr = new T[capacity];
 	}
-	DynamicArray(const DynamicArray<T>& other) {
-		copy(other);
+	DynamicArray(const DynamicArray<T>& otherArr) {
+		copy(otherArr);
 	}
-	DynamicArray& operator = (const DynamicArray<T>& other) {
-		if (this != &other) {
+	DynamicArray& operator = (const DynamicArray<T>& otherArr) {
+		if (this != &otherArr) {
 			delete[] arr;
-			copy(other);
+			copy(otherArr);
 		}
 		return *this;
 	}
 	~DynamicArray() {
-		for (unsigned int i = 0; i < size; i++)
-		{
-
+		for (unsigned int i = 0; i < size; i++) {
 
 			delete arr[i];
 		}
 	}
-	void unionWith(const DynamicArray<T>& other) {
-		for (int i = 0; i < other.get_size(); i++)
-		{
-			this->push_back(other.get_ElementAtIndex(i));
+	void unionWithOther(const DynamicArray<T>& otherArr) {
+		for (int i = 0; i < otherArr.get_size(); i++) {
+			this->push_back(otherArr.get_ElementAtIndex(i));
 		}
 
 	}
@@ -72,18 +70,18 @@ public:
 		size++;
 	}
 
-	T& operator [] (unsigned i) {
-		return arr[i];
+	T& operator[] (unsigned index) {
+		return arr[index];
 	}
-	T operator[](unsigned i) const {
-		return arr[i];
+	T operator[] (unsigned index) const {
+		return arr[index];
 	}
 
 	unsigned get_size() const {
 		return size;
 	}
-	T get_ElementAtIndex(unsigned i) const {
-		return arr[i];
+	T get_ElementAtIndex(unsigned index) const {
+		return arr[index];
 	}
 	void remove_by_index(unsigned index) {
 		for (unsigned i = index; i <= this->size - 1; i++) {
