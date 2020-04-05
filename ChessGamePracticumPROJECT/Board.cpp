@@ -1,5 +1,4 @@
 #include "stdafx.h"
-
 #include"Figure.h"
 #include"King.h"
 #include"Queen.h"
@@ -12,10 +11,10 @@
 
 void Board::placeFigures() {
 
-	for (int i = 0; i < 4 * GlobalVaribles::SIZE; i++)
-	{
+	for (int i = 0; i < 4 * GlobalVaribles::SIZE; i++){
 		arraysToDelete->push_back(new DynamicArray<Figure*>);
 	}
+// too many arguments, some of arguments could be private members of class
 	// place kings
 	board[0][4].setFigure(new King(new Position(0, 4), BLACK, arraysToDelete->get_ElementAtIndex(0)));
 	board[GlobalVaribles::SIZE - 1][4].setFigure(new King(new Position(GlobalVaribles::SIZE - 1, 4), WHITE, arraysToDelete->get_ElementAtIndex(1)));

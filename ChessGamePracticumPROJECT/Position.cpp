@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "Position.h"
-#include<assert.h>
 #include"GlobalVariables.h"
+#include<assert.h>
 #include<iostream>
-
 
 int Position::getRow() const {
 	return this->row;
@@ -41,6 +40,7 @@ bool Position::areValid(int row, int column){
 }
 
 bool Position::areValid(const Position* position) {
+// if is so long, maybe to be separated
 	if (position->row < 0 || position->row > GlobalVaribles::SIZE || position->column < 0 || position->column > GlobalVaribles::SIZE) {
 		return false;
 	}
