@@ -9,12 +9,6 @@ private:
 	unsigned size;
 	unsigned capacity;
 
-	//************************************
-	// Method:    resize
-	// FullName:  DynamicArray<T>::resize
-	// Access:    private 
-	// Returns:   void
-	//************************************
 	void resize() {
 		capacity *= 2;
 		T* temp = new T[capacity];
@@ -55,6 +49,7 @@ public:
 			delete arr[i];
 		}
 	}
+
 	void unionWithOther(const DynamicArray<T>& otherArr) {
 		for (int i = 0; i < otherArr.get_size(); i++) {
 			this->push_back(otherArr.get_ElementAtIndex(i));
