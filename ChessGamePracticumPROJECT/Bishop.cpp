@@ -3,7 +3,7 @@
 #include"IBoard.h"
 
 
-Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures) {
+Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFigures) : Figure(position, color, takenFigures) {
 
 	this->setName("Bishop");
 
@@ -18,19 +18,19 @@ Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFig
 	this->rules.push_back(new Position(-1, -1));
 }
 
-void Bishop::getPossibleMoves(DynamicArray<Move*>* result) {
+void Bishop::getPossibleMoves(DynamicArray<Move*>* result) { //to long
 	bool flag = true;
 	int row, column, tempRow, tempColumn, colorCorrection;
 	colorCorrection = 1;
-	Color curentColor;
+	Color currentColor;
 	row = position->getRow();
-	column = position->getCol();
-	currentColor = board->getFigure(row, col)->getColor();
+	column = position->getColumn();
+	currentColor = board->getFigure(row, column)->getColor();
 	if (currentColor == BLACK) {
 		colorCorrection = -1;
 	}
 
-	for (int i = 0; i < GlobalVaribles::SIZE ; i++) {
+	for (int i = 0; i < GlobalVaribles::SIZE; i++) {
 
 		if (!board->isEmpty(row, column)) {
 			for (unsigned int p = 0; p < rules.get_size(); p++) {
@@ -38,7 +38,7 @@ void Bishop::getPossibleMoves(DynamicArray<Move*>* result) {
 				int add = 1;
 				while (flag) {
 					tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
-					tempColumn = column + add * (rules.get_ElementAtIndex(p)->getCol());
+					tempColumn = column + add * (rules.get_ElementAtIndex(p)->getColumn());
 
 					if (position->areValid(tempRow, tempColumn)) {
 
@@ -47,7 +47,6 @@ void Bishop::getPossibleMoves(DynamicArray<Move*>* result) {
 							result->push_back(new Move(row, column, tempRow, tempColumn));
 						}
 						// if there is enemy figure and attacking move is true
-
 						else if (board->getFigure(tempRow, tempColumn)->getColor() != currentColor) {
 							// if there is figure of somekind the rook could not jump over it 
 							result->push_back(new Move(row, col, tempRow, tempColumn, true));
@@ -68,6 +67,5 @@ void Bishop::getPossibleMoves(DynamicArray<Move*>* result) {
 	}
 }
 
-Bishop::~Bishop()
-{
+Bishop::~Bishop(){
 }
