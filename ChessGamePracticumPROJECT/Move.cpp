@@ -69,7 +69,6 @@ void Move::logToConsole() {
 	std::cout << "is Attacking move:" << getIsAttacking() << std::endl;
 
 	std::cout << std::endl;
-	std::cout << std::endl;
 }
 
 Move::~Move() {

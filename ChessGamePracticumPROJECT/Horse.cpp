@@ -2,23 +2,7 @@
 #include "Horse.h"
 #include"IBoard.h"
 
-
-
-
-
-
-//************************************
-// Method:    Horse
-// FullName:  Horse::Horse
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
-Horse::Horse(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
-{
+Horse::Horse(Position * position, Color color, DynamicArray<Figure*>* takenFigures) : Figure(position, color, takenFigures) {
 	this->setName("Horse");
 	// row col
 	// 2 left up 1
@@ -38,9 +22,5 @@ Horse::Horse(Position * position, Color color, DynamicArray<Figure*>* takenFigur
 	// 2 down right 1
 	this->rules.push_back(new Position(2, 1));
 }
-
-
-
-Horse::~Horse()
-{
+Horse::~Horse() {
 }

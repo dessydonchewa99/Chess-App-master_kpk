@@ -1,16 +1,19 @@
 #pragma once
-class Position
-{
+
+class Position {
+private:
 	int row, column;
 public:
-	int getRow()const;
-	int getcolumn()const;
-	void setRow(int row);
-	void setColumn(int column);
 	Position();
 	Position(int row, int column);
 	static bool areValid(int row, int column);
 	bool areValid(const Position * position);
 	 ~Position();
+
+	int getRow() const;
+	int getcolumn() const;
+
+	void setRow(int row);
+	void setColumn(int column);
 };
 

@@ -1,5 +1,4 @@
 #pragma once
-
 #include"Square.h"
 #include"GlobalVariables.h"
 #include"IBoard.h"
@@ -16,9 +15,9 @@ public:
 	 ~Board();
 
 	void placeFigures() override;
-	bool isEmpty(int row, int column)	override;
-	Figure* getFigure(int row, int column)	override;
-	bool setFigure(int row, int column, Figure* figure)	override;
+	bool isEmpty(int row, int column) override;
+	Figure* getFigure(int row, int column) override;
+	bool setFigure(int row, int column, Figure* figure) override;
 	bool makeTileEmpty(int row, int column) override;
 };
 

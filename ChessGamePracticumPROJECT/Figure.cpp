@@ -4,11 +4,9 @@
 #include"IBoard.h"
 #include<iostream>
 
-
-
 #pragma warning(disable : 4996)
 
-Figure::Figure(Position* position, Color color, DynamicArray<Figure*>*din) {
+Figure::Figure(Position* position, Color color, DynamicArray<Figure*>*takenFigures) {
 	this->position = position;
 	this->color = color;
 	this->isTaken_m = false;
@@ -17,13 +15,13 @@ Figure::Figure(Position* position, Color color, DynamicArray<Figure*>*din) {
 
 }
 
-char *  Figure::getName() const {
+char* Figure::getName() const {
 	char* result = new char[strlen(this->name) + 1];
 	strcpy(result, this->name);
 	return result;
 }
 
-void Figure::setName(const char * name) {
+void Figure::setName(const char* name) {
 	if (this->name != nullptr) {
 		delete this->name;
 	}
