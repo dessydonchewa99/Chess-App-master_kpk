@@ -2,25 +2,10 @@
 #include "Rook.h"
 #include"IBoard.h"
 
-
-
-
-
-//************************************
-// Method:    Rook
-// FullName:  Rook::Rook
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
-Rook::Rook(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
-{
+Rook::Rook(Position * position, Color color, DynamicArray<Figure*>* takenFigures) : Figure(position, color, takenFigures) {
 	this->setName("Rook");
 	// row col
-	// 
+
 	// up
 	this->rules.push_back(new Position(-1, 0));
 	// down 
@@ -31,52 +16,34 @@ Rook::Rook(Position * position, Color color, DynamicArray<Figure*>* takenFigures
 	// right
 	this->rules.push_back(new Position(0, 1));
 }
-
-//************************************
-// Method:    getPossibleMoves
-// FullName:  Rook::getPossibleMoves
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void Rook::getPossibleMoves( DynamicArray<Move*>* result)
-{
+void Rook::getPossibleMoves(DynamicArray<Move*>* result) {
 	bool flag = true;
 	int row, col, tempRow, tempCol;
-	Color curentColor;
+	Color currentColor;
 	row = this->position->getRow();
-	col = this->position->getCol();
-	curentColor = board->getFigure(row, col)->getColor();
+	column = this->position->getColumn();
+	currentColor = board->getFigure(row, column)->getColor();
 
-	for (unsigned int i = 0; i < 1; i++)
-	{
+	for (unsigned int i = 0; i < 1; i++) {
 
-		if (!board->isEmpty(row, col))
-		{
-			for (unsigned int p = 0; p < rules.get_size(); p++)
-			{
+		if (!board->isEmpty(row, column)) {
+			for (unsigned int j = 0; j < rules.getSize(); j++) {
 				flag = true;
 				int add = 1;
-				while (flag)
-				{
-					tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
-					tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
+				while (flag) {
+					tempRow = row + add * (rules.getElementAtIndex(j)->getRow());
+					tempColumn = column + add * (rules.getElementAtIndex(j)->getColumn());
 
-					if (position->areValid(tempRow, tempCol))
-					{
+					if (position->areValid(tempRow, tempColumn)) {
 
-						if (board->isEmpty(tempRow, tempCol))
-						{
+						if (board->isEmpty(tempRow, tempColumn)) {
 							// if board is empty and attacking move is false
-							result->push_back(new Move(row, col, tempRow, tempCol));
+							result->push_back(new Move(row, column, tempRow, tempColumn));
 						}
-						// if there is enemy figure and attacking move is true
-
-						else if (board->getFigure(tempRow, tempCol)->getColor() != curentColor)
+						else if (board->getFigure(tempRow, tempColumn)->getColor() != curentColor)
 						{
 							// if there is figure of somekind the rook could not jump over it 
-							result->push_back(new Move(row, col, tempRow, tempCol, true));
+							result->push_back(new Move(row, column, tempRow, tempColumn, true));
 							flag = false;
 						}
 						else {
@@ -88,15 +55,11 @@ void Rook::getPossibleMoves( DynamicArray<Move*>* result)
 					}
 					++add;
 				}
-				// close foreach rules here
 			}
-		}
-		// close foreach rule
-		
+		}	
 
 	}
 }
 
-Rook::~Rook()
-{
+Rook::~Rook() {
 }

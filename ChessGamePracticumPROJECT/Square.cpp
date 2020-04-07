@@ -1,74 +1,31 @@
 #include "stdafx.h"
 #include "Square.h"
 
-
-//************************************
-// Method:    isEmpty
-// FullName:  Square::isEmpty
-// Access:    public 
-// Returns:   bool
-// Qualifier: const
-//************************************
-bool Square::isEmpty() const
-{
-	return this->_isEmpty;
+Square::Square() {
+	this->isEmpty = true;
 }
 
-//************************************
-// Method:    setFigure
-// FullName:  Square::setFigure
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: Figure * figure
-//************************************
-void Square::setFigure(Figure* figure)
-{
-	this->figure = figure;
-	this->_isEmpty = false;
+void Square::setFigure(Figure* otherFigure) {
+	this->figure = otherFigure;
+	this->isEmpty = false;
 }
 
-//************************************
-// Method:    getFigure
-// FullName:  Square::getFigure
-// Access:    public 
-// Returns:   Figure *
-// Qualifier: const
-//************************************
-Figure * Square::getFigure() const
-{
+bool Square::getIsEmpty() const {
+	return this->isEmpty;
+}
+
+Figure * Square::getFigure() const {
 	return this->figure;
 }
 
-//************************************
-// Method:    removeFigure
-// FullName:  Square::removeFigure
-// Access:    public 
-// Returns:   Figure *
-// Qualifier:
-//************************************
-Figure * Square::removeFigure()
-{
-	this->_isEmpty = true;
+Figure * Square::removeFigure() {
+	this->isEmpty = true;
 	Figure* result = this->figure;
 	this->figure = nullptr;
 	return result;
 }
 
-//************************************
-// Method:    Square
-// FullName:  Square::Square
-// Access:    public 
-// Returns:   
-// Qualifier:
-//************************************
-Square::Square()
-{
-	this->_isEmpty = true;
-}
 
-
- Square::~Square()
-{
-	 std::cout << "delete square";
+ Square::~Square() {
+	 std::cout << "~Square() is called";
 }
