@@ -3,80 +3,53 @@
 #include"IBoard.h"
 #include"Queen.h"
 
-//************************************
-// Method:    Pawn
-// FullName:  Pawn::Pawn
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
-Pawn::Pawn(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
-{
+Pawn::Pawn(Position * position, Color color, DynamicArray<Figure*>* takenFigures) : Figure(position, color, takenFigures) {
 	this->setName("Pawn");
-	// the first move is the non attacking
+
+	// only first move is not attacking
 	this->rules.push_back(new Position(1, 0));
-	// 2nd and 3rd moves are the attacking moves
+
 	this->rules.push_back(new Position(1, -1));
 	this->rules.push_back(new Position(1, 1));
 
-
 }
 
+void Pawn::getPossibleMoves(DynamicArray<Move*>* result) { //отново функцията трябва да се оптимизира, прекалено дълга
 
-//************************************
-// Method:    getPossibleMoves
-// FullName:  Pawn::getPossibleMoves
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void Pawn::getPossibleMoves(DynamicArray<Move*>* result)
-{
-
-	bool flag = true;
-	int row, col, tempRow, tempCol;
-	Color curentColor;
+	bool flag = true; // на много места във файловете има флаг, не е добро име
+	int row, column, tempRow, tempColumn;
+	Color currentColor;
 	row = this->getRow();
-	col = this->getCol();
-	curentColor = board->getFigure(row, col)->getColor();
+	column = this->getCol();
+	currentColor = board->getFigure(row, column)->getColor();
 	int add = 1;
-	if (curentColor == WHITE) { add = -1; };
-	if (!board->isEmpty(row, col))
-	{
-		for (unsigned int p = 0; p < 1; p++)
-		{
+	if (currentColor == WHITE) { 
+		add = -1;
+ 	}
+	if (!board->isEmpty(row, column)) {
+		for (unsigned int i = 0; i < 1; i++) {
 			flag = true;
 
+			tempRow = row + add * (rules.getElementAtIndex(i)->getRow());
+			tempColumn = column + add * (rules.getElementAtIndex(i)->getColumn());
 
-			tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
-			tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
+			if (position->areValid(tempRow, tempCol)) {
 
-			if (position->areValid(tempRow, tempCol))
-			{
+				if (board->isEmpty(tempRow, tempCol)) {
+					// if board is empty and attacking move is false - повтаря се прекалено много пъти из файловете, в документация?
+					result->push_back(new Move(row, column, tempRow, tempColumn));
 
-				if (board->isEmpty(tempRow, tempCol))
-				{
-					// if board is empty and attacking move is false
-					result->push_back(new Move(row, col, tempRow, tempCol));
-
-					if (board->isEmpty(tempRow + add, tempCol)) {
-						if (curentColor == WHITE && row == 6)
-						{
-							result->push_back(new Move(row, col, tempRow + add, tempCol));
+					if (board->isEmpty(tempRow + add, tempColumn)) {
+						if (curentColor == WHITE && row == 6) {
+							result->push_back(new Move(row, column, tempRow + add, tempColumn));
 						}
 					}
-					if (board->isEmpty(tempRow + add, tempCol)) {
-						if (curentColor == BLACK && row == 1)
-						{
-							result->push_back(new Move(row, col, tempRow + add, tempCol));
+					if (board->isEmpty(tempRow + add, tempColumn)) {
+						if (currentColor == BLACK && row == 1) {
+							result->push_back(new Move(row, column, tempRow + add, tempColumn));
 						}
 					}
 				}
-				// if there is enemy figure and attacking move is true
 				else {
 					flag = false;
 				}
@@ -87,20 +60,20 @@ void Pawn::getPossibleMoves(DynamicArray<Move*>* result)
 
 
 
-			for (int p = 1; p < 3; p++)
+			for (int j = 1; j < 3; p++)
 			{
 
 
-				tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
-				tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
-				if (!board->isEmpty(tempRow, tempCol))
+				tempRow = row + add * (rules.getElementAtIndex(j)->getRow());
+				tempColumn = column + add * (rules.getElementAtIndex(j)->getColumn());
+				if (!board->isEmpty(tempRow, tempColumn))
 				{
 
 
-					if (board->getFigure(tempRow, tempCol)->getColor() != curentColor)
+					if (board->getFigure(tempRow, tempColumn)->getColor() != currentColor)
 					{
 						// if there is figure of somekind the rook could not jump over it 
-						result->push_back(new Move(row, col, tempRow, tempCol, true));
+						result->push_back(new Move(row, column, tempRow, tempColumn, true));
 						flag = false;
 					}
 				}
@@ -112,8 +85,5 @@ void Pawn::getPossibleMoves(DynamicArray<Move*>* result)
 
 
 
-Pawn::~Pawn()
-{
-	//std::cout << "hit delete figure";
-	//delete &rules;
+Pawn::~Pawn() {
 }
