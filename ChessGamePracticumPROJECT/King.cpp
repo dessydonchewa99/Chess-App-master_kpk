@@ -1,19 +1,12 @@
 #include "stdafx.h"
 #include "King.h"
 #include"IBoard.h"
-//************************************
-// Method:    King
-// FullName:  King::King
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
-King::King(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
-{
+
+King::King(Position* position, Color color, DynamicArray<Figure*>* takenFigures) : Figure(position, color, takenFigures) {
 	this->setName("King");
+
+	// голямо повторение на описанието за позиция, може да се премести в документация 	// или отделен .h файл
+
 	// row col
 	// up left (diagonal)
 	this->rules.push_back(new Position(-1, -1));
@@ -33,26 +26,15 @@ King::King(Position * position, Color color, DynamicArray<Figure*>* takenFigures
 	this->rules.push_back(new Position(0, -1));
 }
 
-//************************************
-// Method:    getPossibleMoves
-// FullName:  King::getPossibleMoves
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void King::getPossibleMoves( DynamicArray<Move*>* result)
-{
+void King::getPossibleMoves(DynamicArray<Move*>* result) {
 	DynamicArray<Position*> freePosition;
 	DynamicArray<Move*> attackedPosition;
 
-	// row = i , col = j
 	for (int i = 0; i < GlobalVaribles::SIZE; i++)
 	{
 		for (int j = 0; j < GlobalVaribles::SIZE; j++)
 		{
-			if (board->isEmpty(i, j))
-			{
+			if (board->isEmpty(i, j)) {
 				freePosition.push_back(new Position(i, j));
 			}
 			else if (!board->isEmpty(i, j)) {
@@ -64,38 +46,35 @@ void King::getPossibleMoves( DynamicArray<Move*>* result)
 			}
 		}
 	}
-	int tempRow, tempCol;
+
+	int tempRow, tempColumn;
 	bool isAttacked = false;
-	for (unsigned int i = 0; i < rules.get_size(); i++)
+
+	for (unsigned int i = 0; i < rules.getSize(); i++)
 	{
-		tempRow = position->getRow() + this->rules.get_ElementAtIndex(i)->getRow();
-		tempCol = position->getCol() + this->rules.get_ElementAtIndex(i)->getCol();
+		tempRow = position->getRow() + this->rules.getElementAtIndex(i)->getRow();
+		tempColumn = position->getColumn() + this->rules.getElementAtIndex(i)->getColumn();
+
 		// if the position is empty and not attacked
-		// if the position is enemy and not attacked 
+
 		isAttacked = false;
-		if (this->position->areValid(tempRow,tempCol))
-		{
+		if (this->position->areValid(tempRow,tempColumn)) {
 
-			for (unsigned int i = 0; i < attackedPosition.get_size(); i++)
-			{
+			for (unsigned int i = 0; i < attackedPosition.getSize(); i++) {
 
-				if (attackedPosition.get_ElementAtIndex(i)->getToRow() == tempRow
-					&& attackedPosition.get_ElementAtIndex(i)->getToCol() == tempCol)
-				{
+				if (attackedPosition.getElementAtIndex(i)->getToRow() == tempRow
+					&& attackedPosition.getElementAtIndex(i)->getToColumn() == tempColumn) {
 					isAttacked = true;
 				}
 			}
-			// if the position is empty and not attacked
-			if (!isAttacked && board->isEmpty(tempRow, tempCol))
-			{
-				result->push_back(new Move(this->position->getRow(), this->position->getCol(), tempRow, tempCol, false));
+			if (!isAttacked && board->isEmpty(tempRow, tempColumn)) {
+				result->push_back(new Move(this->position->getRow(), this->position->getColumn(), tempRow, tempColumn, false));
 			}
-			// if the position is enemy and not attacked 
-			if (!this->board->isEmpty(tempRow, tempCol) && !isAttacked)
-			{
-				if (this->board->getFigure(tempRow, tempCol)->getColor() != this->getColor())
-				{
-					result->push_back(new Move(this->position->getRow(), this->position->getCol(), tempRow, tempCol, true));
+			if (!this->board->isEmpty(tempRow, tempColumn) && !isAttacked) {
+				if (this->board->getFigure(tempRow, tempColumn)->getColor() != this->getColor()) {
+
+					//тук също има много аргументи, НО е конструктор, затова би трябвало да нарушава чистия код
+					result->push_back(new Move(this->position->getRow(), this->position->getColumn(), tempRow, tempColumn, true));
 				}
 			}
 
@@ -103,6 +82,5 @@ void King::getPossibleMoves( DynamicArray<Move*>* result)
 	}
 }
 
-King::~King()
-{
+King::~King() {
 }
