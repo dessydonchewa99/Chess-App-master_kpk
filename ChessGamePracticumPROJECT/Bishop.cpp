@@ -2,6 +2,13 @@
 #include "Bishop.h"
 #include"IBoard.h"
 
+/**
+* Construct new Bishop
+*@param Position * position
+*@param Color color
+*@param DynamicArray<Figure * > * takenFigures
+*@return Bishop
+*/
 
 Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFigures) : Figure(position, color, takenFigures) {
 
@@ -17,6 +24,11 @@ Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFig
 	// up 1, left 1
 	this->rules.push_back(new Position(-1, -1));
 }
+
+/**
+*Get possible moves for this figure.
+*@param DynamicArray<Move * > * result
+*/
 
 void Bishop::getPossibleMoves(DynamicArray<Move*>* result) { //твърде дълга
 	bool flag = true;
@@ -66,6 +78,10 @@ void Bishop::getPossibleMoves(DynamicArray<Move*>* result) { //твърде дъ
 
 	}
 }
+
+/**
+*Bishop Destructor
+*/
 
 Bishop::~Bishop(){
 }
