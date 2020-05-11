@@ -2,6 +2,13 @@
 #include "King.h"
 #include"IBoard.h"
 
+/**
+* Construct new King
+*@param Position * position
+*@param Color color
+*@param DynamicArray<Figure * > * takenFigures
+*@return King
+*/
 King::King(Position* position, Color color, DynamicArray<Figure*>* takenFigures) : Figure(position, color, takenFigures) {
 	this->setName("King");
 
@@ -26,6 +33,14 @@ King::King(Position* position, Color color, DynamicArray<Figure*>* takenFigures)
 	this->rules.push_back(new Position(0, -1));
 }
 
+//************************************
+// Method:    getPossibleMoves
+// FullName:  King::getPossibleMoves
+// Access:    public 
+// Returns:   void
+// Qualifier:
+// Parameter: DynamicArray<Move * > * result
+//************************************
 void King::getPossibleMoves(DynamicArray<Move*>* result) {
 	DynamicArray<Position*> freePosition;
 	DynamicArray<Move*> attackedPosition;
